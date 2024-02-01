@@ -1,0 +1,12 @@
+node_modules/
+vendor/
+includes/.env
+appsalon.dt.com/
+
+
+
+# .v4p backup files
+*~.xml
+
+# Dynamic plugins .dll
+bin/
