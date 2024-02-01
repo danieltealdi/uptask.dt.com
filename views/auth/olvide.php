@@ -18,10 +18,10 @@
     
             <input type="submit" class="boton" value="Enviar Instrucciones">
 </form>
-
-</div>
 <div class="acciones">
     <a href="/">¿Ya tienes cuenta? Iniciar Sesión</a>
     <a href="/crear">¿Aún no tienes una cuenta? Obtener una</a>
 </div>
+</div>
+
 </div>

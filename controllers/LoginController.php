@@ -95,6 +95,7 @@ class LoginController
 
     public static function reestablecer(Router $router)
     {
+        /*
         $alertas = [];
         $error = false;
         $token = s($_GET['token']);
@@ -115,7 +116,9 @@ class LoginController
             }
         }
         $alertas = Usuario::getAlertas();
-        $router->render('auth/recuperar-password', [
+        */
+        $router->render('auth/reestablecer', [
+            'titulo' => 'Reestablecer Password',
             'alertas' => $alertas,
             'error' => $error
         ]);
@@ -154,11 +157,14 @@ class LoginController
 
     public static function mensaje(Router $router)
     {
-        $router->render('auth/mensaje');
+        $router->render('auth/mensaje', [
+            'titulo' => 'Cuenta creada exitosamente'
+        ]);
     }
 
     public static function confirmar(Router $router)
     {
+        /*
         $alertas = [];
         $token = s($_GET['token']);
         $usuario = Usuario::where('token', $token);
@@ -171,7 +177,9 @@ class LoginController
             Usuario::setAlerta('exito', 'Cuenta confirmada');
         }
         $alertas = Usuario::getAlertas();
-        $router->render('auth/confirmar-cuenta', [
+        */
+        $router->render('auth/confirmar', [
+            'titulo' => 'Confirmar Cuenta',
             'alertas' => $alertas
         ]);
     }

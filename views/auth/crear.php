@@ -39,10 +39,10 @@
     </div>
             <input type="submit" class="boton" value="Crear Cuenta">
 </form>
-
-</div>
 <div class="acciones">
     <a href="/">¿Ya tienes cuenta? Iniciar Sesión</a>
     <a href="/olvide">¿Olvidaste tu Password?</a>
 </div>
+</div>
+
 </div>
