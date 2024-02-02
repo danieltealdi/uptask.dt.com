@@ -5,8 +5,8 @@ namespace Controllers;
 use MVC\Router;
 
 use Model\Usuario;
-use Classes\Email;
-use PHPMailer\PHPMailer\PHPMailer;
+use Classes\Mailer;
+//use PHPMailer\PHPMailer\PHPMailer;
 
 class LoginController
 {
@@ -126,28 +126,39 @@ class LoginController
 
     public static function crear(Router $router)
     {
-        //echo "aqui";
-        //debuguear($router);
-        /*
-        $usuario = new Usuario();
+        //debuguear('crear');
+        $alertas = [];
+        $usuario = new Usuario;
+        //debuguear($usuario);
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
             $usuario->sincronizar($_POST);
-            $alertas = $usuario->validar();
+            $alertas = $usuario->validarNuevaCuenta();
+            //debuguear($alertas);
+            
             if(empty($alertas)) {
-                $existe = $usuario->existeEmail();
+                $existe = $usuario->where('email', $usuario->email);
                 if($existe) {
+                    Usuario::setAlerta('error', 'El usuario ya esta registrado');
                     $alertas = Usuario::getAlertas();
                 } else {
                     $usuario->hashPassword();
+                    unset($usuario->password2);
                     $usuario->crearToken();
-                    $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
+                    //var_dump($usuario);
+                    //var_dump(Mailer);
+                    $email = new Mailer($usuario->email, $usuario->nombre, $usuario->token);
+                    //$email = new Mailer;
+                    //debuguear($email);                    
                     $email->enviarConfirmacion();
-                    $usuario->guardar();
-                    header('Location: /mensaje');
+                    $resultado = $usuario->guardar();
+                    if($resultado) {
+                        header('Location: /mensaje');
+                    }
                 }
             }
+            
         }
-        */
+
         $router->render('auth/crear', [
             'titulo' => 'Crea tu cuenta en UpTask',
             'usuario' => $usuario,
@@ -164,7 +175,7 @@ class LoginController
 
     public static function confirmar(Router $router)
     {
-        /*
+        
         $alertas = [];
         $token = s($_GET['token']);
         $usuario = Usuario::where('token', $token);
@@ -173,11 +184,12 @@ class LoginController
         } else {
             $usuario->confirmado = "1";
             $usuario->token = null;
+            unset($usuario->password2);
             $usuario->guardar();
             Usuario::setAlerta('exito', 'Cuenta confirmada');
         }
         $alertas = Usuario::getAlertas();
-        */
+        
         $router->render('auth/confirmar', [
             'titulo' => 'Confirmar Cuenta',
             'alertas' => $alertas

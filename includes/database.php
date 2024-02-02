@@ -1,6 +1,6 @@
 <?php
 
-$db = mysqli_connect('localhost', 'root', '1Coma4142', 'appSalonDb');
+$db = mysqli_connect('localhost', 'root', '1Coma4142', 'uptask');
 
 
 if (!$db) {
