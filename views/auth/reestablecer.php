@@ -4,7 +4,7 @@
 
 	<div class="contenedor-sm">
 		<p class="descripcion-pagina">Entra tu nuevo password</p>
-		<form action="/reestablecer" method="POST" class="formulario">
+		<form method="POST" class="formulario">
 			
 			<div class="campo">
 				<label for="password">Password</label>

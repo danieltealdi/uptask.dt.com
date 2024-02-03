@@ -65,6 +65,8 @@ class ActiveRecord {
     public static function where($columna, $valor) {
         $query = "SELECT * FROM " . static::$tabla . " WHERE ${columna} = '${valor}'";
         $resultado = self::consultarSQL($query);
+        //var_dump($resultado);
+        //var_dump(array_shift( $resultado )); die;
         return array_shift( $resultado ) ;
     }
 

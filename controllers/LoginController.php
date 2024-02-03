@@ -6,6 +6,7 @@ use MVC\Router;
 
 use Model\Usuario;
 use Classes\Mailer;
+
 //use PHPMailer\PHPMailer\PHPMailer;
 
 class LoginController
@@ -64,7 +65,7 @@ class LoginController
     public static function olvide(Router $router)
     {
         //debuguear($router);
-        /*
+
         $alertas = [];
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
             $auth = new Usuario($_POST);
@@ -76,7 +77,7 @@ class LoginController
                     $usuario->crearToken();
                     $usuario->guardar();
                     // Enviar el email
-                    $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
+                    $email = new Mailer($usuario->email, $usuario->nombre, $usuario->token);
                     $email->enviarInstrucciones();
                     // Alerta de exito
                     Usuario::setAlerta('exito', 'Revisa tu email');
@@ -86,7 +87,7 @@ class LoginController
             }
         }
         $alertas = Usuario::getAlertas();
-        */
+
         $router->render('auth/olvide', [
             'titulo' => 'Olvidé mi Password',
             'alertas' => $alertas
@@ -95,28 +96,44 @@ class LoginController
 
     public static function reestablecer(Router $router)
     {
-        /*
+
         $alertas = [];
         $error = false;
         $token = s($_GET['token']);
+        if(!$token) {
+            header('Location: /');
+        }
+        //var_dump($token);
         $usuario = Usuario::where('token', $token);
+        //var_dump($usuario);die;
         if(empty($usuario)) {
             Usuario::setAlerta('error', 'Token no válido');
             $error = true;
         }
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            //echo "aqui";
             $password = new Usuario($_POST);
+            //var_dump($password);
             $alertas = $password->validarPassword();
+            //var_dump($alertas);
+            
             if(empty($alertas)) {
+                //var_dump($password->password);
+                //var_dump($usuario);
                 $usuario->password = $password->password;
                 $usuario->hashPassword();
                 $usuario->token = null;
-                $usuario->guardar();
-                header('Location: /');
+                //var_dump($usuario);die;
+                $resultado=$usuario->guardar();
+                //debuguear($resultado);
+                if($resultado) {
+                    header('Location: /');
+                }
+                
             }
         }
         $alertas = Usuario::getAlertas();
-        */
+
         $router->render('auth/reestablecer', [
             'titulo' => 'Reestablecer Password',
             'alertas' => $alertas,
@@ -128,13 +145,13 @@ class LoginController
     {
         //debuguear('crear');
         $alertas = [];
-        $usuario = new Usuario;
+        $usuario = new Usuario();
         //debuguear($usuario);
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
             $usuario->sincronizar($_POST);
             $alertas = $usuario->validarNuevaCuenta();
             //debuguear($alertas);
-            
+
             if(empty($alertas)) {
                 $existe = $usuario->where('email', $usuario->email);
                 if($existe) {
@@ -148,7 +165,7 @@ class LoginController
                     //var_dump(Mailer);
                     $email = new Mailer($usuario->email, $usuario->nombre, $usuario->token);
                     //$email = new Mailer;
-                    //debuguear($email);                    
+                    //debuguear($email);
                     $email->enviarConfirmacion();
                     $resultado = $usuario->guardar();
                     if($resultado) {
@@ -156,7 +173,7 @@ class LoginController
                     }
                 }
             }
-            
+
         }
 
         $router->render('auth/crear', [
@@ -175,7 +192,7 @@ class LoginController
 
     public static function confirmar(Router $router)
     {
-        
+
         $alertas = [];
         $token = s($_GET['token']);
         $usuario = Usuario::where('token', $token);
@@ -189,7 +206,7 @@ class LoginController
             Usuario::setAlerta('exito', 'Cuenta confirmada');
         }
         $alertas = Usuario::getAlertas();
-        
+
         $router->render('auth/confirmar', [
             'titulo' => 'Confirmar Cuenta',
             'alertas' => $alertas
