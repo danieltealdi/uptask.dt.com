@@ -22,4 +22,32 @@ class DashboardController
             'proyectos' => $proyectos
         ]);
     }
+    public static function crear_proyecto(Router $router)
+    {
+        
+        session_start();
+        isAuth();
+        if(!isset($_SESSION['id'])) {
+            header('Location: /');
+        }
+        //$proyectos = Proyecto::belongsTo('propietarioId', $_SESSION['id']);
+        $router->render('dashboard/crear-proyecto', [
+            'titulo' => 'Crear Proyecto',
+            'proyectos' => $proyectos
+        ]);
+    }
+    public static function perfil(Router $router)
+    {
+        
+        session_start();
+        isAuth();
+        if(!isset($_SESSION['id'])) {
+            header('Location: /');
+        }
+        //$proyectos = Proyecto::belongsTo('propietarioId', $_SESSION['id']);
+        $router->render('dashboard/perfil', [
+            'titulo' => 'Perfil',
+            'proyectos' => $proyectos
+        ]);
+    }
 }
