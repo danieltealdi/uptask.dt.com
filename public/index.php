@@ -8,6 +8,7 @@ require_once __DIR__ . '/../includes/app.php';
 
 use MVC\Router;
 use Controllers\LoginController;
+use Controllers\DashboardController;
 
 $router = new Router();
 //debuguear($router);
@@ -23,6 +24,7 @@ $router->get('/crear', [LoginController::class, 'crear']);
 $router->post('/crear', [LoginController::class, 'crear']);
 $router->get('/mensaje', [LoginController::class, 'mensaje']);
 $router->get('/confirmar', [LoginController::class, 'confirmar']);
+$router->get('/dashboard', [DashboardController::class, 'index']);
 
 
 

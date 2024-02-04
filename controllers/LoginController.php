@@ -14,7 +14,7 @@ class LoginController
     public static function login(Router $router)
     {
         //debuguear('login');
-        /*
+        
         $alertas = [];
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
             $auth = new Usuario($_POST);
@@ -22,7 +22,7 @@ class LoginController
             if(empty($alertas)) {
                 // Comprobar que exista el usuario
                 $usuario = Usuario::where('email', $auth->email);
-                if($usuario) {
+                if($usuario&&$usuario->confirmado) {
                     // Verificar el password
                     if($usuario->comprobarPasswordAndVerificado($auth->password)) {
                         // Autenticar el usuario
@@ -34,20 +34,17 @@ class LoginController
                         $_SESSION['email'] = $usuario->email;
                         $_SESSION['login'] = true;
                         // Redireccionamiento
-                        if($usuario->admin === "1") {
-                            $_SESSION['admin'] = $usuario->admin ?? null;
-                            header('Location: /admin');
-                        } else {
-                            header('Location: /cita');
-                        }
+                        
+                            header('Location: /dashboard');
+                        
                     }
                 } else {
-                    Usuario::setAlerta('error', 'Usuario no encontrado');
+                    Usuario::setAlerta('error', 'Usuario no encontrado o confirmado');
                 }
             }
         }
         $alertas = Usuario::getAlertas();
-        */
+        
         $router->render('auth/login', [
             'titulo' => 'Iniciar Sesión',
             'alertas' => $alertas
