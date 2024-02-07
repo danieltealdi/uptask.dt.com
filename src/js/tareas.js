@@ -35,7 +35,39 @@
                             modal.remove();
                         }, 500);
                     }
+                    if (e.target.classList.contains('submit-nueva-tarea')) {
+                        submitFormularioNuevaTarea();
+                    }
                 })
-        document.querySelector('body').appendChild(modal);
+                
+        document.querySelector('.dashboard').appendChild(modal);
     }
 })();
+function submitFormularioNuevaTarea(){
+        const tarea=document.querySelector('#tarea').value.trim();
+        if(tarea.length === 0){   
+        mostrarAlerta('No se puede agregar una tarea vacía', 'error', document.querySelector('.formulario legend'));
+        
+        return;
+        }
+        agregarTarea(tarea);       
+}
+function mostrarAlerta(mensaje, tipo, referencia){
+    const alertaPrevia = document.querySelector('.alerta');
+    if(alertaPrevia){
+        alertaPrevia.remove();
+    }
+    const alerta=document.createElement('DIV');
+    alerta.textContent=mensaje;
+    alerta.classList.add('alerta', tipo);
+    //console.log(referencia);return;
+    //const formulario=document.querySelector('.formulario');
+    referencia.parentElement.insertBefore(alerta, referencia.nextElementSibling);
+    setTimeout(() => {
+        alerta.remove();
+    }, 5000);
+    return alerta;
+}
+function agregarTarea(tarea){
+    
+}

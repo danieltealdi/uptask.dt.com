@@ -27,6 +27,10 @@
             margin-bottom: 2rem;
             
         }
+        input[type="text"]{
+                border:solid 1px v.$gris;
+                border-radius: .5rem;
+        }
         .opciones{
             display: flex;
             justify-content: space-between;
