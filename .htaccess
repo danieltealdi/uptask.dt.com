@@ -12,3 +12,4 @@ RewriteRule (.+) public/$1 [L]
 #RewriteRule (.*) public/index.php?route=$1 [L,QSA]
 RewriteRule (.*) public/index.php?$1 [L,QSA]
 </IfModule>
+
