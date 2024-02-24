@@ -27,15 +27,16 @@
         input:not([type="submit"]) {
             background-color: v.$blanco;
         }
-        input[type="submit"]{
+
+        input[type="submit"] {
             @include m.boton(v.$indigo, v.$blanco);
-            padding:1rem;
+            padding: 1rem;
             font-size: 1.4rem;
             font-weight: bold;
             text-transform: uppercase;
-            
+
+        }
     }
-}
 
     .cerrar-sesion {
         @include m.boton(darken(v.$indigo, 10%), v.$blanco);
