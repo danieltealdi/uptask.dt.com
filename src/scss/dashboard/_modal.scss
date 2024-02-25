@@ -37,9 +37,11 @@
         }
         .submit-nueva-tarea{
             @include m.boton(v.$indigo, v.$blanco);
+            border-radius: 1rem;
         }
         .cerrar-modal{
             @include m.boton(v.$naranja, v.$blanco);
+            border-radius: 1rem;
             
         }
         &.animar {
