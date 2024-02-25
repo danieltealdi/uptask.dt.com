@@ -27,6 +27,7 @@
     "terser": "^5.3.8"
   },
   "dependencies": {
-    "caniuse-lite": "^1.0.30001582"
+    "caniuse-lite": "^1.0.30001582",
+    "sweetalert2": "^11.10.5"
   }
 }

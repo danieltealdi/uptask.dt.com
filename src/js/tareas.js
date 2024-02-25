@@ -1,4 +1,5 @@
 (function () {
+    
     obtenerTareas();
     let tareas = [];
     const nuevaTareaBtn = document.querySelector('#agregar-tarea');
