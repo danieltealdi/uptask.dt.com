@@ -79,10 +79,35 @@ class DashboardController
         if(!isset($_SESSION['id'])) {
             header('Location: /');
         }
+        $usuario=Usuario::find($_SESSION['id']);
+        $alertas=[];
+        //debuguear($usuario);
         //$proyectos = Proyecto::belongsTo('propietarioId', $_SESSION['id']);
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+           
+            $usuario->sincronizar($_POST);
+            $alertas = $usuario->validar_perfil();
+             
+            if(empty($alertas)) {
+                $existeUsuario = Usuario::where('email', $usuario->email);
+                if($existeUsuario && $existeUsuario->id !== $usuario->id ) {
+                    // Mensaje de error
+                    Usuario::setAlerta('error', 'Email no válido, ya pertenece a otra cuenta');
+                    $alertas = $usuario->getAlertas();
+                } else {
+                    // Guardar el registro
+                    $usuario->guardar();
+                    Usuario::setAlerta('exito', 'Guardado correctamente');
+                    $alertas=$usuario->getAlertas();
+                    $_SESSION['nombre'] = $usuario->nombre;
+                    $_SESSION['email'] = $usuario->email;
+                }
+            }
+        }
         $router->render('dashboard/perfil', [
             'titulo' => 'Perfil',
-            'proyectos' => $proyectos
+            'usuario' => $usuario,
+            'alertas' => $alertas
         ]);
     }
 }
