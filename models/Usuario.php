@@ -13,6 +13,8 @@ class Usuario extends ActiveRecord
         $this->email = $args['email'] ?? '';
         $this->password = $args['password'] ?? '';
         $this->password2 = $args['password2'] ?? '';
+        $this->password_actual = $args['password-actual'] ?? '';
+        $this->password_nuevo = $args['password-nuevo'] ?? '';
         $this->confirmado = $args['confirmado'] ?? 0;
         $this->token = $args['token'] ?? '';
     }
@@ -100,5 +102,20 @@ class Usuario extends ActiveRecord
             self::$alertas['error'][] = 'El Email es Obligatorio';
         }
         return self::$alertas;
+    }
+    public function nuevo_password() {
+        if(!$this->password_actual) {
+            self::$alertas['error'][] = 'El password actual es obligatorio';
+        }
+        if(!$this->password_nuevo) {
+            self::$alertas['error'][] = 'El password nuevo es obligatorio';
+        }
+        if(strlen($this->password_nuevo) < 6) {
+            self::$alertas['error'][] = 'El password debe tener al menos 6 caracteres';
+        }
+        return self::$alertas;
+    }
+    public function comprobar_password() : bool {
+        return password_verify($this->password_actual, $this->password );
     }
 }

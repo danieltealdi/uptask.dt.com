@@ -45,4 +45,10 @@
         border-radius: 0.3rem;
 
     }
+    .enlace{
+        color: v.$indigo;
+        &:hover{
+            color: darken(v.$indigo, 20%);
+        }
+    }
 }

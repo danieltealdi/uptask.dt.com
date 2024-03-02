@@ -34,6 +34,10 @@ $router->get('/perfil', [DashboardController::class, 'perfil']);
 $router->post('/perfil', [DashboardController::class, 'perfil']);
 $router->get('/proyecto', [DashboardController::class, 'proyecto']);
 
+$router->get('/cambiar-password', [DashboardController::class, 'cambiar_password']);
+$router->post('/cambiar-password', [DashboardController::class, 'cambiar_password']);
+
+
 $router->get('/api/tareas', [TareaController::class, 'index']);
 $router->post('/api/tarea', [TareaController::class, 'crear']);
 $router->post('/api/tarea/actualizar', [TareaController::class, 'actualizar']);
